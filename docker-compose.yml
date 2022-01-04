@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  hue:
+    ports:
+      - '5555:5555'
+    environment:
+      G_MESSAGES_DEBUG: all
+      PLANTD_MODULE_ARGS: -vvv
+      PLANTD_MODULE_STANDALONE: 'false'
+      PLANTD_MODULE_ENDPOINT: tcp://box.local:7200
+      PLANTD_MODULE_BROKER: tcp://*:7200
+      PLANTD_MODULE_CONFIG_FILE: data/module.json
+      PLANTD_MODULE_SERVICE: hue
+    restart: unless-stopped

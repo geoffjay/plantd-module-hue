@@ -16,7 +16,7 @@ class App(Plantd.Application):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, application_id="org.plantd.dev.Hue", flags=0, **kwargs)
         # load environment
-        service = os.getenv("PLANTD_MODULE_SERVICE", "dev-messaging")
+        service = os.getenv("PLANTD_MODULE_SERVICE", "dev-hue")
         endpoint = os.getenv("PLANTD_MODULE_ENDPOINT", "tcp://localhost:5555")
         source_endpoint = os.getenv("TEST_EVENTS_FRONTEND", "tcp://localhost:11005")
         # configure application
