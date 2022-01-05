@@ -3,5 +3,7 @@
 
 .venv
 
+.docker
+
 *.pyc
 /__pycache__/

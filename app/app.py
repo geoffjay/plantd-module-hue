@@ -3,7 +3,7 @@ import os
 import gi
 
 from .event_sink import EventSink
-from .test_job import TestJob
+from .test_job import KitchenJob, SpareBedroomJob
 
 gi.require_version("Plantd", "1.0")
 
@@ -50,13 +50,15 @@ class App(Plantd.Application):
 
     def do_submit_job(self, job_name, job_value, job_properties):
         """Handle the submit-job request"""
-        Plantd.info(f"submit-job: {job_name} [{job_value}]")
         response = Plantd.JobResponse.new()
-        # for our "test" job just pass the job_value to the TestJob class
-        if job_name == "test":
-            job = TestJob(job_value)
-            # job.connect("event", self.on_publish_event)
-            event = Plantd.Event.new_full(1000, "foo", "foo-bar-baz")
+        if job_name == "kitchen-brightness":
+            job = KitchenJob(job_value)
+            event = Plantd.Event.new_full(1000, "kitchen:brightness", f"{job_value}")
+            self.send_event(event)
+            response.set_job(job)
+        elif job_name == "spare-bedroom-brightness":
+            job = SpareBedroomJob(job_value)
+            event = Plantd.Event.new_full(1001, "spare-bedroom:brightness", f"{job_value}")
             self.send_event(event)
             response.set_job(job)
         else:
