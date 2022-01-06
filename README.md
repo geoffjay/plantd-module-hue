@@ -24,4 +24,4 @@ request.set_job_id("change-room")
 request.set_job_value("Spare Bedroom")
 request.add(Plantd.Property.new("brightness", "127"))
 client.send_request("hue", "submit-job", request.serialize())
-``
+```
