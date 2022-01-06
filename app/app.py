@@ -7,7 +7,7 @@ gi.require_version("Plantd", "1.0")
 from gi.repository import Plantd  # noqa: E402
 
 from .event_sink import EventSink
-from .hue_jobs import ChangeRoomJob
+from .jobs import ChangeRoomJob
 
 
 class App(Plantd.Application):
