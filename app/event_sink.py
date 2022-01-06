@@ -11,7 +11,7 @@ class EventSink(Plantd.Sink):
     __gtype_name__ = "EventSink"
 
     def __init__(self, *args, **kwargs):
-        endpoint = os.getenv("TEST_EVENTS_BACKEND", "tcp://localhost:12000")
+        endpoint = os.getenv("PLANTD_MODULE_HUE_EVENTS_BACKEND", "tcp://localhost:12000")
         super().__init__(*args, **kwargs)
         self.set_endpoint(endpoint)
         self.set_filter("")

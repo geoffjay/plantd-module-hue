@@ -2,12 +2,12 @@ import os
 
 import gi
 
-from .event_sink import EventSink
-from .test_job import KitchenJob, SpareBedroomJob
-
 gi.require_version("Plantd", "1.0")
 
 from gi.repository import Plantd  # noqa: E402
+
+from .event_sink import EventSink
+from .hue_jobs import ChangeRoomJob
 
 
 class App(Plantd.Application):
@@ -18,7 +18,7 @@ class App(Plantd.Application):
         # load environment
         service = os.getenv("PLANTD_MODULE_SERVICE", "dev-hue")
         endpoint = os.getenv("PLANTD_MODULE_ENDPOINT", "tcp://localhost:5555")
-        source_endpoint = os.getenv("TEST_EVENTS_FRONTEND", "tcp://localhost:11005")
+        source_endpoint = os.getenv("PLANTD_MODULE_HUE_EVENTS_FRONTEND", "tcp://localhost:11005")
         # configure application
         self.set_endpoint(endpoint)
         self.set_service(service)
@@ -51,14 +51,9 @@ class App(Plantd.Application):
     def do_submit_job(self, job_name, job_value, job_properties):
         """Handle the submit-job request"""
         response = Plantd.JobResponse.new()
-        if job_name == "kitchen-brightness":
-            job = KitchenJob(job_value)
-            event = Plantd.Event.new_full(1000, "kitchen:brightness", f"{job_value}")
-            self.send_event(event)
-            response.set_job(job)
-        elif job_name == "spare-bedroom-brightness":
-            job = SpareBedroomJob(job_value)
-            event = Plantd.Event.new_full(1001, "spare-bedroom:brightness", f"{job_value}")
+        if job_name == "change-room":
+            job = ChangeRoomJob(job_value, job_properties)
+            event = Plantd.Event.new_full(1000, "change-room", f"{job_value}")
             self.send_event(event)
             response.set_job(job)
         else:

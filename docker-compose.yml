@@ -13,6 +13,9 @@ services:
       PLANTD_MODULE_BROKER: tcp://*:7200
       PLANTD_MODULE_CONFIG_FILE: data/module.json
       PLANTD_MODULE_SERVICE: hue
+      PLANTD_MODULE_HUE_IP: 10.10.10.101
     restart: unless-stopped
     volumes:
       - ./.docker/python_hue:/root/.python_hue
+      - ./module.py:/module/module.py
+      - ./app:/module/app

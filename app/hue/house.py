@@ -1,11 +1,15 @@
-from phue import Bridge
+import gi
+from phue import Bridge, Group, Light
+
+gi.require_version("Plantd", "1.0")
+
+from gi.repository import Plantd  # noqa: E402
 
 
 class House:
-    def __init__(self):
-        self.bridge = Bridge("10.10.10.101")
+    def __init__(self, ip: str):
+        self.bridge = Bridge(ip)
         self.bridge.connect()
-        self.light_names = self.bridge.get_light_objects("name")
 
     @staticmethod
     def _clamp(min: float, max: float, value: float) -> float:
@@ -16,11 +20,13 @@ class House:
         return ((y_max - y_min) / (x_max - x_min)) * (value - x_min) + y_min
 
     def set_room_brightness(self, room: str, brightness: float) -> None:
-        lights = {key: value for (key, value) in self.light_names.items() if key.startswith(room)}
-        for light in lights.values():
-            light.brightness = brightness
+        try:
+            group = Group(self.bridge, room)
+            group.brightness = int(brightness)
+        except LookupError as e:
+            Plantd.error(e)
 
     def set_room_percentage(self, room: str, percent: float) -> None:
         percent = self._clamp(0, 100, percent)
         brightness = self._scale(0, 100, 0, 254, percent)
-        return self.set_room_brightness(room, brightness)
+        self.set_room_brightness(room, brightness)
