@@ -2,12 +2,12 @@ import os
 
 import gi
 
-gi.require_version("Plantd", "1.0")
+gi.require_version("Pd", "1.0")
 
-from gi.repository import Plantd  # noqa: E402
+from gi.repository import Pd  # noqa: E402
 
 
-class EventSink(Plantd.Sink):
+class EventSink(Pd.Sink):
     __gtype_name__ = "EventSink"
 
     def __init__(self, *args, **kwargs):
@@ -17,8 +17,8 @@ class EventSink(Plantd.Sink):
         self.set_filter("")
 
     def do_handle_message(self, msg):
-        event = Plantd.Event.new()
+        event = Pd.Event.new()
         if event is None:
             raise Exception("failed to create an event")
         # event.deserialize(msg)
-        Plantd.debug(msg)
+        Pd.debug(msg)

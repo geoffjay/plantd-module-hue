@@ -12,7 +12,7 @@ services:
       PLANTD_MODULE_ENDPOINT: tcp://box.local:7200
       PLANTD_MODULE_BROKER: tcp://*:7200
       PLANTD_MODULE_CONFIG_FILE: data/module.json
-      PLANTD_MODULE_SERVICE: hue
+      PLANTD_MODULE_SERVICE: org.plantd.Hue
       PLANTD_MODULE_HUE_IP: 10.10.10.101
     restart: unless-stopped
     volumes:

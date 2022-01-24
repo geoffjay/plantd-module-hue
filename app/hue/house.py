@@ -1,9 +1,9 @@
 import gi
 from phue import Bridge, Group, Light
 
-gi.require_version("Plantd", "1.0")
+gi.require_version("Pd", "1.0")
 
-from gi.repository import Plantd  # noqa: E402
+from gi.repository import Pd  # noqa: E402
 
 
 class House:
@@ -24,7 +24,7 @@ class House:
             group = Group(self.bridge, room)
             group.brightness = int(brightness)
         except LookupError as e:
-            Plantd.error(e)
+            Pd.error(e)
 
     def set_room_percentage(self, room: str, percent: float) -> None:
         percent = self._clamp(0, 100, percent)

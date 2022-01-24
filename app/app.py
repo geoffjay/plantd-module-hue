@@ -2,15 +2,15 @@ import os
 
 import gi
 
-gi.require_version("Plantd", "1.0")
+gi.require_version("Pd", "1.0")
 
-from gi.repository import Plantd  # noqa: E402
+from gi.repository import Pd  # noqa: E402
 
 from .event_sink import EventSink
 from .jobs import ChangeRoomJob
 
 
-class App(Plantd.Application):
+class App(Pd.Application):
     __gtype_name__ = "App"
 
     def __init__(self, *args, **kwargs):
@@ -24,7 +24,7 @@ class App(Plantd.Application):
         self.set_service(service)
         self.set_inactivity_timeout(10000)
         # setup events
-        self.event_source = Plantd.Source.new(source_endpoint, "")
+        self.event_source = Pd.Source.new(source_endpoint, "")
         self.add_source("event", self.event_source)
         self.event_sink = EventSink()
         # start things
@@ -35,25 +35,25 @@ class App(Plantd.Application):
         """Handle the get-property request by returning a made up value.
 
         :param key: the property to retrieve
-        :return: `Plantd.PropertyResponse`
+        :return: `Pd.PropertyResponse`
         """
-        Plantd.info(f"get-property: {key}")
-        response = Plantd.PropertyResponse.new()
-        prop = Plantd.Property.new(key, "test")
+        Pd.info(f"get-property: {key}")
+        response = Pd.PropertyResponse.new()
+        prop = Pd.Property.new(key, "test")
         response.set_property(prop)
         return response
 
     def do_get_status(self):
-        Plantd.debug("get-status")
-        response = Plantd.StatusResponse.new()
+        Pd.debug("get-status")
+        response = Pd.StatusResponse.new()
         return response
 
     def do_submit_job(self, job_name, job_value, job_properties):
         """Handle the submit-job request"""
-        response = Plantd.JobResponse.new()
+        response = Pd.JobResponse.new()
         if job_name == "change-room":
             job = ChangeRoomJob(job_value, job_properties)
-            event = Plantd.Event.new_full(1000, "change-room", f"{job_value}")
+            event = Pd.Event.new_full(1000, "change-room", f"{job_value}")
             self.send_event(event)
             response.set_job(job)
         else:

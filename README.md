@@ -12,16 +12,16 @@ Bedroom".
 ```python
 import gi
 
-gi.require_version("Plantd", "1.0")
+gi.require_version("Pd", "1.0")
 
-from gi.repository import Plantd
+from gi.repository import Pd
 
 
-client = Plantd.Client.new("tcp://<broker ip>:7200")
-request = Plantd.JobRequest()
+client = Pd.Client.new("tcp://<broker ip>:7200")
+request = Pd.JobRequest()
 request.set_id("hue")
 request.set_job_id("change-room")
 request.set_job_value("Spare Bedroom")
-request.add(Plantd.Property.new("brightness", "127"))
+request.add(Pd.Property.new("brightness", "127"))
 client.send_request("hue", "submit-job", request.serialize())
 ```

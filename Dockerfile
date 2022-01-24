@@ -24,7 +24,7 @@ WORKDIR /module
 RUN pip install -r requirements.txt
 
 # Put the overrides file in the venv
-RUN cp /usr/local/lib/python3.8/site-packages/gi/overrides/Plantd.py \
+RUN cp /usr/local/lib/python3.8/site-packages/gi/overrides/Pd.py \
     /opt/venv/lib/python3.8/site-packages/gi/overrides/
 
 ENV G_MESSAGES_DEBUG=module
