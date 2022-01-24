@@ -25,3 +25,18 @@ request.set_job_value("Spare Bedroom")
 request.add(Pd.Property.new("brightness", "127"))
 client.send_request("hue", "submit-job", request.serialize())
 ```
+
+Another method of achieving the same result is using the [Plantd CLI][plantcli]
+that's in very early stages, but can be used for queuing jobs.
+
+```shell
+plant client --broker=tcp://box.local:7200 submit-job \
+  --module-id="org.plantd.Hue" \
+  --job-id="change-room"
+  --job-value="Spare Bedroom" \
+  --job-properties="brightness=255"
+```
+
+<!-- references -->
+
+plantcli: https://github.com/geoffjay/plantcli
