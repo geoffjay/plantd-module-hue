@@ -39,4 +39,4 @@ plant client --broker=tcp://box.local:7200 submit-job \
 
 <!-- references -->
 
-plantcli: https://github.com/geoffjay/plantcli
+[plantcli]: https://github.com/geoffjay/plantcli
