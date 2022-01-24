@@ -30,7 +30,7 @@ Another method of achieving the same result is using the [Plantd CLI][plantcli]
 that's in very early stages, but can be used for queuing jobs.
 
 ```shell
-plant client --broker=tcp://box.local:7200 submit-job \
+poetry run plant client --broker=tcp://box.local:7200 submit-job \
   --module-id="org.plantd.Hue" \
   --job-id="change-room"
   --job-value="Spare Bedroom" \
